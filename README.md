@@ -34,12 +34,12 @@ Eligible environment tags in url (such as 'https://dev.company.xyz') are as foll
 
 They will be determined based on origin. Currently supporting:
 
-- http://localhost:<PORT> --> local
-- https://<Environment>.company.xyz --> <Environment>
-- https://some-project-<Environment>.company.xyz --> <Environment>
-- https://<Environment>-some-project.company.xyz --> <Environment>
-- https://some-<Environment>-project.company.xyz --> <Environment>
-- https://<Full URL for production environment> --> prod
+- http://localhost:{PORT} --> local
+- https://{Environment}.company.xyz --> {Environment}
+- https://some-project-{Environment}.company.xyz --> {Environment}
+- https://{Environment}-some-project.company.xyz --> {Environment}
+- https://some-{Environment}-project.company.xyz --> {Environment}
+- https://{Full URL for production environment} --> prod
 
 ### Determining if Sentry is enabled for the application
 
