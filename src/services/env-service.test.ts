@@ -15,18 +15,21 @@ describe('sentry-util', () => {
 
   describe('containsEnvironmentTag', () => {
     each`
-        origin                                              | tag       | expectedResult
-        ${'https://some-project-qa-webapp.company.xyz'}     | ${'qa'}   | ${true}
-        ${'https://some-project-qa-webapp.company.xyz'}     | ${'dev'}  | ${false}
-        ${'https://some-project-dev-webapp.company.xyz'}    | ${'dev'}  | ${true}
-        ${'http://some-project-dev-webapp.company.xyz'}     | ${'dev'}  | ${false}
-        ${'https://some-project-webapp-qa.company.xyz'}     | ${'qa'}   | ${true}
-        ${'https://qa-some-project-webapp.company.xyz'}     | ${'qa'}   | ${true}
-        ${'http://someqaproject-webapp.company.xyz'}        | ${'qa'}   | ${false}
-        ${'http://dev.company.xyz'}                         | ${'dev'}  | ${false}
-        ${'https://dev.company.xyz'}                        | ${'dev'}  | ${true}
-        ${'https://dev.company.xyz'}                        | ${'qa'}   | ${false}
-        ${'https://qa.company.xyz'}                         | ${'qa'}   | ${true}
+        origin                                                | tag       | expectedResult
+        ${'https://some-project-qa-webapp.company.xyz'}       | ${'qa'}   | ${true}
+        ${'https://some-project-qa-webapp.company.xyz'}       | ${'dev'}  | ${false}
+        ${'https://some-project-dev-webapp.company.xyz'}      | ${'dev'}  | ${true}
+        ${'https://www.some-project-dev-webapp.company.xyz'}  | ${'dev'}  | ${true}
+        ${'http://some-project-dev-webapp.company.xyz'}       | ${'dev'}  | ${false}
+        ${'https://some-project-webapp-qa.company.xyz'}       | ${'qa'}   | ${true}
+        ${'https://qa-some-project-webapp.company.xyz'}       | ${'qa'}   | ${true}
+        ${'http://someqaproject-webapp.company.xyz'}          | ${'qa'}   | ${false}
+        ${'http://dev.company.xyz'}                           | ${'dev'}  | ${false}
+        ${'https://dev.company.xyz'}                          | ${'dev'}  | ${true}
+        ${'https://dev.company.xyz'}                          | ${'qa'}   | ${false}
+        ${'https://qa.company.xyz'}                           | ${'qa'}   | ${true}
+        ${'https://www.qa.company.xyz'}                       | ${'qa'}   | ${true}
+        ${'https://www.dev.company.xyz'}                      | ${'qa'}   | ${false}
       `.it(
       'should return $expectedResult for origin: $origin and tag: $tag',
       ({

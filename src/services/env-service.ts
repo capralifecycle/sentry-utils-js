@@ -9,6 +9,14 @@ export enum Environment {
   UNKNOWN = 'unknown'
 }
 
+const ELIGIBLE_ENVIRONMENT_TAGS = [
+  Environment.DEV,
+  Environment.TEST,
+  Environment.QA,
+  Environment.DEVTEST,
+  Environment.SYSTEST
+];
+
 function isHttps(origin: string): boolean {
   return /^https/.test(origin);
 }
@@ -23,19 +31,15 @@ export function getCurrentEnvironment(prodOrigin?: string): Environment {
     return Environment.PROD;
   } else if (isLocalEnvironment(origin)) {
     return Environment.LOCAL;
-  } else if (containsEnvironmentTag(origin, Environment.QA)) {
-    return Environment.QA;
-  } else if (containsEnvironmentTag(origin, Environment.DEV)) {
-    return Environment.DEV;
-  } else if (containsEnvironmentTag(origin, Environment.SYSTEST)) {
-    return Environment.SYSTEST;
-  } else if (containsEnvironmentTag(origin, Environment.DEVTEST)) {
-    return Environment.DEVTEST;
-  } else if (containsEnvironmentTag(origin, Environment.TEST)) {
-    return Environment.TEST;
-  } else {
-    return Environment.UNKNOWN;
   }
+
+  ELIGIBLE_ENVIRONMENT_TAGS.forEach(tag => {
+    if (containsEnvironmentTag(origin, tag)) {
+      return tag;
+    }
+  });
+
+  return Environment.UNKNOWN;
 }
 
 export function isLocalEnvironment(origin: string): boolean {
@@ -58,6 +62,5 @@ export function containsEnvironmentTag(origin: string, tag: string): boolean {
     return true;
   }
 
-  const simpleRegex = new RegExp(`\/\/${tag}\.`, 'i');
-  return simpleRegex.test(origin);
+  return new RegExp(`\/\/(www\.){0,1}${tag}\.`, 'i').test(origin);
 }
