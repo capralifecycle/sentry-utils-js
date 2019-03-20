@@ -1,6 +1,10 @@
 import each from 'jest-each';
 
-import { isLocalEnvironment, isProdEnvironment, containsEnvironmentTag } from './env-service';
+import {
+  isLocalEnvironment,
+  isProdEnvironment,
+  containsEnvironmentTag
+} from './env-service';
 
 describe('sentry-util', () => {
   describe('isLocalEnvironment', () => {
@@ -19,6 +23,10 @@ describe('sentry-util', () => {
         ${'https://some-project-webapp-qa.company.xyz'}     | ${'qa'}   | ${true}
         ${'https://qa-some-project-webapp.company.xyz'}     | ${'qa'}   | ${true}
         ${'http://someqaproject-webapp.company.xyz'}        | ${'qa'}   | ${false}
+        ${'http://dev.company.xyz'}                         | ${'dev'}  | ${false}
+        ${'https://dev.company.xyz'}                        | ${'dev'}  | ${true}
+        ${'https://dev.company.xyz'}                        | ${'qa'}   | ${false}
+        ${'https://qa.company.xyz'}                         | ${'qa'}   | ${true}
       `.it(
       'should return $expectedResult for origin: $origin and tag: $tag',
       ({
@@ -38,7 +46,10 @@ describe('sentry-util', () => {
   describe('isProdEnvironment', () => {
     it('should return true if origin matches given url', () => {
       expect(
-        isProdEnvironment('https://some-project.company.xyz', 'some-project.company.xyz')
+        isProdEnvironment(
+          'https://some-project.company.xyz',
+          'some-project.company.xyz'
+        )
       ).toBe(true);
     });
   });
