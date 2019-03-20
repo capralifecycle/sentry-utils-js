@@ -20,6 +20,7 @@ describe('sentry-util', () => {
         ${'https://some-project-qa-webapp.company.xyz'}       | ${'dev'}  | ${false}
         ${'https://some-project-dev-webapp.company.xyz'}      | ${'dev'}  | ${true}
         ${'https://www.some-project-dev-webapp.company.xyz'}  | ${'dev'}  | ${true}
+        ${'https://www.some-project-dev-webapp.company.xyz'}  | ${'abc'}  | ${false}
         ${'http://some-project-dev-webapp.company.xyz'}       | ${'dev'}  | ${false}
         ${'https://some-project-webapp-qa.company.xyz'}       | ${'qa'}   | ${true}
         ${'https://qa-some-project-webapp.company.xyz'}       | ${'qa'}   | ${true}

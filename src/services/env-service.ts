@@ -21,6 +21,17 @@ function isHttps(origin: string): boolean {
   return /^https/.test(origin);
 }
 
+function isOriginWithDashedEnvironmentTag(
+  origin: string,
+  tag: string
+): boolean {
+  return new RegExp(`\/\/.*(-${tag}|${tag}-).*\.`, 'i').test(origin);
+}
+
+function isOriginWithEnvironmentTag(origin: string, tag: string): boolean {
+  return new RegExp(`\/\/(www\.){0,1}${tag}\.`, 'i').test(origin);
+}
+
 export function getCurrentEnvironment(prodOrigin?: string): Environment {
   const origin = window.location.origin;
   if (!origin) {
@@ -57,10 +68,10 @@ export function containsEnvironmentTag(origin: string, tag: string): boolean {
   if (!isHttps(origin)) {
     return false;
   }
-  const dashRegex = new RegExp(`\/\/.*(-${tag}|${tag}-).*\.`, 'i');
-  if (dashRegex.test(origin)) {
+
+  if (isOriginWithDashedEnvironmentTag(origin, tag)) {
     return true;
   }
 
-  return new RegExp(`\/\/(www\.){0,1}${tag}\.`, 'i').test(origin);
+  return isOriginWithEnvironmentTag(origin, tag);
 }
