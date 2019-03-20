@@ -39,6 +39,7 @@ They will be determined based on origin. Currently supporting:
 - https://some-project-{Environment}.company.xyz --> {Environment}
 - https://{Environment}-some-project.company.xyz --> {Environment}
 - https://some-{Environment}-project.company.xyz --> {Environment}
+- https://www.${Environment}.company.xyz --> {Environment}
 - https://{Full URL for production environment} --> prod
 
 ### Determining if Sentry is enabled for the application
