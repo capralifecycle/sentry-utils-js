@@ -1,3 +1,11 @@
+/**
+ * Make a throttler that will return true if not throttled.
+ *
+ * The time period is the mean lifetime for a request counting
+ * towards [maxRequests].
+ *
+ * This means after [timePeriodMs], 1/e of the [maxRequests] is the new count.
+ */
 export default function makeThrottleByMeanLifetime(
   timePeriodMs: number,
   maxRequests: number

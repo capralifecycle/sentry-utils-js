@@ -1,3 +1,3 @@
-export function getCurrentRelease(): string {
-  return `${APP_NAME}@${APP_VERSION}`;
+export function getCurrentRelease(appName: string, appVersion: string): string {
+  return `${appName}@${appVersion}`;
 }
