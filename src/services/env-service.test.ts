@@ -1,8 +1,8 @@
 import each from 'jest-each';
 
 import {
-  isLocalEnvironment,
   isProdEnvironment,
+  isLocalEnvironment,
   containsEnvironmentTag
 } from './env-service';
 
@@ -21,8 +21,8 @@ describe('sentry-util', () => {
         ${'https://some-project-dev-webapp.company.xyz'}      | ${'dev'}  | ${true}
         ${'https://www.some-project-dev-webapp.company.xyz'}  | ${'dev'}  | ${true}
         ${'https://www.some-project-dev-webapp.company.xyz'}  | ${'abc'}  | ${false}
-        ${'http://some-project-dev-webapp.company.xyz'}       | ${'dev'}  | ${false}
         ${'https://some-project-webapp-qa.company.xyz'}       | ${'qa'}   | ${true}
+        ${'http://some-project-dev-webapp.company.xyz'}       | ${'dev'}  | ${false}
         ${'https://qa-some-project-webapp.company.xyz'}       | ${'qa'}   | ${true}
         ${'http://someqaproject-webapp.company.xyz'}          | ${'qa'}   | ${false}
         ${'http://dev.company.xyz'}                           | ${'dev'}  | ${false}
