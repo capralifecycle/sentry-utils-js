@@ -1,7 +1,20 @@
 import { getCurrentEnvironment } from './services/env-service';
 import makeThrottleByMeanLifetime from './services/throttle-service';
-import { IDefaultSentryConfiguration, IRequiredConfiguration } from './types';
 import { getCurrentRelease } from './utils/release-util';
+
+export interface IDefaultSentryConfiguration {
+  environment: string;
+  release: string;
+  dsn: string;
+  beforeSend: (e: any) => any | null;
+}
+
+export interface IRequiredConfiguration {
+  appName: string;
+  appVersion: string;
+  prodOrigin?: string;
+  sentryDsn: string;
+}
 
 export function getDefaultConfiguration({
   appName,
