@@ -1,5 +1,7 @@
 # Utils for monitoring web applications with Sentry
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7cb78cd9dd9440a48ff6b5646a2fa3cb)](https://www.codacy.com/app/oyvindym/sentry-utils-js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=capraconsulting/sentry-utils-js&amp;utm_campaign=Badge_Grade)
+
 ## Usage
 
 ```
