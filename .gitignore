@@ -4,5 +4,5 @@
 /lib
 .vscode
 *.log
-.rpt2_cache
+.rpt2_cache*
 .rts2_cache*

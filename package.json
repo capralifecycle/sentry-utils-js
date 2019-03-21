@@ -2,10 +2,10 @@
   "name": "@capraconsulting/sentry-utils-js",
   "version": "1.0.2",
   "description": "Utils for monitoring webapps with Sentry",
-  "main": "lib/sentry-utils-js.js",
+  "main": "dist/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "build": "rimraf lib && microbundle -o lib -f cjs --sourcemap true",
+    "build": "rimraf dist && microbundle",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
