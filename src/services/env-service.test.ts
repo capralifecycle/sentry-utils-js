@@ -1,9 +1,9 @@
 import each from 'jest-each';
 
 import {
-  isProdEnvironment,
+  containsEnvironmentTag,
   isLocalEnvironment,
-  containsEnvironmentTag
+  isProdEnvironment
 } from './env-service';
 
 describe('sentry-util', () => {
