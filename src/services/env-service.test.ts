@@ -1,8 +1,8 @@
 import each from 'jest-each';
 
 import {
-  isLocalEnvironment,
   isProdEnvironment,
+  isLocalEnvironment,
   containsEnvironmentTag
 } from './env-service';
 
