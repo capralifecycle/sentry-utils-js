@@ -1,5 +1,6 @@
 import { getCurrentEnvironment } from './services/env-service';
 import makeThrottleByMeanLifetime from './services/throttle-service';
+import { IDefaultSentryConfiguration, IRequiredConfiguration } from './types';
 import { getCurrentRelease } from './utils/release-util';
 
 export function getDefaultConfiguration({

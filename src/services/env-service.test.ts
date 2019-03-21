@@ -33,15 +33,7 @@ describe('sentry-util', () => {
         ${'https://www.dev.company.xyz'}                      | ${'qa'}   | ${false}
       `.it(
       'should return $expectedResult for origin: $origin and tag: $tag',
-      ({
-        origin,
-        tag,
-        expectedResult
-      }: {
-        origin: string;
-        tag: string;
-        expectedResult: boolean;
-      }) => {
+      ({ origin, tag, expectedResult }: any) => {
         expect(containsEnvironmentTag(origin, tag)).toBe(expectedResult);
       }
     );

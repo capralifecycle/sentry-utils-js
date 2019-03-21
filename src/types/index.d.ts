@@ -1,13 +1,13 @@
 declare module 'jest-each';
 
-interface IDefaultSentryConfiguration {
+export interface IDefaultSentryConfiguration {
   environment: string;
   release: string;
   dsn: string;
   beforeSend: (e: any) => any | null;
 }
 
-interface IRequiredConfiguration {
+export interface IRequiredConfiguration {
   appName: string;
   appVersion: string;
   prodOrigin?: string;
