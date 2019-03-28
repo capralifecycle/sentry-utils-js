@@ -33,7 +33,7 @@ function isOriginWithEnvironmentTag(origin: string, tag: string): boolean {
 }
 
 export function getCurrentEnvironment(prodOrigin?: string): Environment {
-  const origin = window.location.origin;
+  const { origin } = window.location;
   if (!origin) {
     return Environment.UNKNOWN;
   }
