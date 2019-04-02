@@ -1,3 +1,5 @@
+import { logService } from '..';
+
 export enum Environment {
   PROD = 'prod',
   LOCAL = 'local',
@@ -39,11 +41,17 @@ export function getCurrentEnvironment(isProd: boolean): Environment {
     return Environment.LOCAL;
   }
 
-  return (
-    ELIGIBLE_ENVIRONMENT_TAGS.find(tag =>
-      containsEnvironmentTag(window.location.origin, tag)
-    ) || Environment.UNKNOWN
+  const environment = ELIGIBLE_ENVIRONMENT_TAGS.find(tag =>
+    containsEnvironmentTag(window.location.origin, tag)
   );
+
+  if (environment) {
+    return environment;
+  }
+  logService.error(
+    `Could not find current environment. Origin is ${window.location.origin}`
+  );
+  return Environment.UNKNOWN;
 }
 
 export function isLocalEnvironment(origin: string): boolean {
