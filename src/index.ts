@@ -1,15 +1,15 @@
 import * as Sentry from '@sentry/browser';
 
 import { getDefaultConfiguration } from './services/config-service';
-import { IRequiredConfiguration } from './types/configuration';
 import {
-  captureInfo,
+  captureDebug,
   captureError,
   captureException,
   captureFeedback,
-  captureWarn,
-  captureDebug
+  captureInfo,
+  captureWarn
 } from './services/log-service';
+import { IRequiredConfiguration } from './types/configuration';
 
 const BUILD_TIME_TAG = 'buildTime';
 
@@ -41,11 +41,12 @@ export function initSentry({
 }
 
 export const logService = {
-  info: (message: string): void => captureInfo(message, isSentryEnabled),
-  warn: (message: string): void => captureWarn(message, isSentryEnabled),
+  debug: (message: string): void => captureDebug(message, isSentryEnabled),
   error: (message: string): void => captureError(message, isSentryEnabled),
-  exception: (e: any): void => captureException(e, isSentryEnabled),
+  exception: (err: any, errInfo?: any): void =>
+    captureException(err, errInfo, isSentryEnabled),
   feedback: (message: string, messageInfo?: { [key: string]: string }): void =>
     captureFeedback(message, messageInfo, isSentryEnabled),
-  debug: (message: string): void => captureDebug(message, isSentryEnabled)
+  info: (message: string): void => captureInfo(message, isSentryEnabled),
+  warn: (message: string): void => captureWarn(message, isSentryEnabled)
 };

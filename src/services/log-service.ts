@@ -44,13 +44,20 @@ export function captureWarn(
 }
 
 export function captureException(
-  e: any,
+  err: any,
+  errInfo: any = {},
   isSentryEnabled: boolean = false
 ): void {
   if (isSentryEnabled) {
-    Sentry.captureException(e);
+    Sentry.withScope(scope => {
+      Object.entries(errInfo).forEach(([key, value]) => {
+        scope.setExtra(key, value);
+      });
+
+      Sentry.captureException(err);
+    });
   } else {
-    console.log(`EXCEPTION: ${e}`);
+    console.log(`EXCEPTION: ${err}`);
   }
 }
 
