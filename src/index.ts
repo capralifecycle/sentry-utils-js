@@ -12,14 +12,14 @@ interface IDefaultSentryConfiguration {
 interface IRequiredConfiguration {
   appName: string;
   appVersion: string;
-  prodOrigin?: string;
+  isProd?: boolean;
   sentryDsn: string;
 }
 
 export function getDefaultConfiguration({
   appName,
   appVersion,
-  prodOrigin,
+  isProd = false,
   sentryDsn
 }: IRequiredConfiguration): IDefaultSentryConfiguration {
   const throttle = makeThrottleByMeanLifetime(60 * 1000, 4);
@@ -27,7 +27,7 @@ export function getDefaultConfiguration({
   return {
     beforeSend: event => (throttle() ? event : null),
     dsn: sentryDsn,
-    environment: getCurrentEnvironment(prodOrigin),
+    environment: getCurrentEnvironment(isProd),
     release: getCurrentRelease(appName, appVersion)
   };
 }

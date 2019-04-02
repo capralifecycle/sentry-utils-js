@@ -1,10 +1,6 @@
 import each from 'jest-each';
 
-import {
-  containsEnvironmentTag,
-  isLocalEnvironment,
-  isProdEnvironment
-} from './env-service';
+import { containsEnvironmentTag, isLocalEnvironment } from './env-service';
 
 describe('sentry-util', () => {
   describe('isLocalEnvironment', () => {
@@ -37,16 +33,5 @@ describe('sentry-util', () => {
         expect(containsEnvironmentTag(origin, tag)).toBe(expectedResult);
       }
     );
-  });
-
-  describe('isProdEnvironment', () => {
-    it('should return true if origin matches given url', () => {
-      expect(
-        isProdEnvironment(
-          'https://some-project.company.xyz',
-          'some-project.company.xyz'
-        )
-      ).toBe(true);
-    });
   });
 });

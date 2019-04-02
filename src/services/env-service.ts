@@ -32,15 +32,10 @@ function isOriginWithEnvironmentTag(origin: string, tag: string): boolean {
   return new RegExp(`\/\/(www\.){0,1}${tag}\.`, 'i').test(origin);
 }
 
-export function getCurrentEnvironment(prodOrigin?: string): Environment {
-  const { origin } = window.location;
-  if (!origin) {
-    return Environment.UNKNOWN;
-  }
-
-  if (prodOrigin && isProdEnvironment(origin, prodOrigin)) {
+export function getCurrentEnvironment(isProd: boolean): Environment {
+  if (isProd) {
     return Environment.PROD;
-  } else if (isLocalEnvironment(origin)) {
+  } else if (isLocalEnvironment(window.location.origin)) {
     return Environment.LOCAL;
   }
 
@@ -55,13 +50,6 @@ export function getCurrentEnvironment(prodOrigin?: string): Environment {
 
 export function isLocalEnvironment(origin: string): boolean {
   return /^http:\/\/localhost:\d{4,5}$/i.test(origin);
-}
-
-export function isProdEnvironment(
-  origin: string,
-  expectedOrigin: string
-): boolean {
-  return origin.toLowerCase().endsWith(expectedOrigin.toLowerCase());
 }
 
 export function containsEnvironmentTag(origin: string, tag: string): boolean {
