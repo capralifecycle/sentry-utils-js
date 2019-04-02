@@ -39,13 +39,11 @@ export function getCurrentEnvironment(isProd: boolean): Environment {
     return Environment.LOCAL;
   }
 
-  ELIGIBLE_ENVIRONMENT_TAGS.forEach(tag => {
-    if (containsEnvironmentTag(origin, tag)) {
-      return tag;
-    }
-  });
-
-  return Environment.UNKNOWN;
+  return (
+    ELIGIBLE_ENVIRONMENT_TAGS.find(tag =>
+      containsEnvironmentTag(window.location.origin, tag)
+    ) || Environment.UNKNOWN
+  );
 }
 
 export function isLocalEnvironment(origin: string): boolean {

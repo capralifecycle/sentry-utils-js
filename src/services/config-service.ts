@@ -1,7 +1,7 @@
+import { IRequiredConfiguration } from '../types/configuration';
 import { getCurrentRelease } from '../utils/release-util';
 import { getCurrentEnvironment } from './env-service';
 import makeThrottleByMeanLifetime from './throttle-service';
-import { IRequiredConfiguration } from '../types/configuration';
 
 export function getDefaultConfiguration({
   appName = 'unknown app',

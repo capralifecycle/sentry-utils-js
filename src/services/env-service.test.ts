@@ -1,6 +1,11 @@
 import each from 'jest-each';
 
-import { containsEnvironmentTag, isLocalEnvironment } from './env-service';
+import {
+  containsEnvironmentTag,
+  Environment,
+  getCurrentEnvironment,
+  isLocalEnvironment
+} from './env-service';
 
 describe('sentry-util', () => {
   describe('isLocalEnvironment', () => {
@@ -33,5 +38,31 @@ describe('sentry-util', () => {
         expect(containsEnvironmentTag(origin, tag)).toBe(expectedResult);
       }
     );
+  });
+
+  describe('getCurrentEnvironment', () => {
+    function setOrigin(origin: string) {
+      Object.defineProperty(window, 'location', {
+        value: {
+          origin
+        },
+        writable: true
+      });
+    }
+
+    test('should return "prod" if isProd is true', () => {
+      setOrigin('http://some-project-prod-webapp.company.xyz');
+      expect(getCurrentEnvironment(true)).toBe(Environment.PROD);
+    });
+
+    test('should return "local" if origin is localhost', () => {
+      setOrigin('http://localhost:3000');
+      expect(getCurrentEnvironment(false)).toBe(Environment.LOCAL);
+    });
+
+    test('should return "qa" if origin includes qa-env tag', () => {
+      setOrigin('https://some-project-qa-webapp.company.xyz');
+      expect(getCurrentEnvironment(false)).toBe(Environment.QA);
+    });
   });
 });

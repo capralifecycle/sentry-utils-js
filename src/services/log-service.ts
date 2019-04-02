@@ -1,3 +1,5 @@
+/* tslint:disable no-console */
+
 import * as Sentry from '@sentry/browser';
 import { Severity } from '@sentry/types';
 
