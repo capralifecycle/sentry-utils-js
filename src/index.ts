@@ -1,41 +1,51 @@
-import { getCurrentEnvironment } from './services/env-service';
-import makeThrottleByMeanLifetime from './services/throttle-service';
-import { getCurrentRelease } from './utils/release-util';
+import * as Sentry from '@sentry/browser';
 
-interface IDefaultSentryConfiguration {
-  environment: string;
-  release: string;
-  dsn: string;
-  beforeSend: (e: any) => any | null;
-}
+import { getDefaultConfiguration } from './services/config-service';
+import { IRequiredConfiguration } from './types/configuration';
+import {
+  captureInfo,
+  captureError,
+  captureException,
+  captureFeedback,
+  captureWarn,
+  captureDebug
+} from './services/log-service';
 
-interface IRequiredConfiguration {
-  appName: string;
-  appVersion: string;
-  isProd?: boolean;
-  sentryDsn: string;
-}
+const BUILD_TIME_TAG = 'buildTime';
 
-export function getDefaultConfiguration({
+let isSentryEnabled = false;
+
+export function initSentry({
   appName,
   appVersion,
+  buildTimestamp,
   isProd = false,
   sentryDsn
-}: IRequiredConfiguration): IDefaultSentryConfiguration {
-  const throttle = makeThrottleByMeanLifetime(60 * 1000, 4);
+}: IRequiredConfiguration) {
+  Sentry.init({
+    ...getDefaultConfiguration({
+      appName,
+      appVersion,
+      isProd
+    }),
+    dsn: sentryDsn
+  });
 
-  return {
-    beforeSend: event => (throttle() ? event : null),
-    dsn: sentryDsn,
-    environment: getCurrentEnvironment(isProd),
-    release: getCurrentRelease(appName, appVersion)
-  };
+  if (buildTimestamp) {
+    Sentry.configureScope(scope => {
+      scope.setTag(BUILD_TIME_TAG, buildTimestamp);
+    });
+  }
+
+  isSentryEnabled = true;
 }
 
-export function getBuildTime(): string | null {
-  return null;
-}
-
-export function isSentryEnabled(sentryDsn?: string): boolean {
-  return typeof sentryDsn === 'string' && sentryDsn.length > 0;
-}
+export const logService = {
+  info: (message: string): void => captureInfo(message, isSentryEnabled),
+  warn: (message: string): void => captureWarn(message, isSentryEnabled),
+  error: (message: string): void => captureError(message, isSentryEnabled),
+  exception: (e: any): void => captureException(e, isSentryEnabled),
+  feedback: (message: string, messageInfo?: { [key: string]: string }): void =>
+    captureFeedback(message, messageInfo, isSentryEnabled),
+  debug: (message: string): void => captureDebug(message, isSentryEnabled)
+};
