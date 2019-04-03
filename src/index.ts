@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/browser';
 
 import { getDefaultConfiguration } from './services/config-service';
+import { getCurrentEnvironment } from './services/env-service';
 import {
   captureDebug,
   captureError,
@@ -22,14 +23,23 @@ export function initSentry({
   isProd = false,
   sentryDsn
 }: IRequiredConfiguration) {
-  Sentry.init({
+  const config: Sentry.BrowserOptions = {
     ...getDefaultConfiguration({
       appName,
       appVersion,
       isProd
     }),
     dsn: sentryDsn
-  });
+  };
+
+  logService.debug(`Found config: ${JSON.stringify(config)}`);
+  logService.debug(
+    `Testing env config for origin ${
+      window.location.origin
+    } -> ${getCurrentEnvironment(false)}`
+  );
+
+  Sentry.init(config);
 
   if (buildTimestamp) {
     Sentry.configureScope(scope => {

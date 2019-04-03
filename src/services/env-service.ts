@@ -1,5 +1,3 @@
-import { logService } from '..';
-
 export enum Environment {
   PROD = 'prod',
   LOCAL = 'local',
@@ -48,9 +46,6 @@ export function getCurrentEnvironment(isProd: boolean): Environment {
   if (environment) {
     return environment;
   }
-  logService.error(
-    `Could not find current environment. Origin is ${window.location.origin}`
-  );
   return Environment.UNKNOWN;
 }
 
