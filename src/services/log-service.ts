@@ -2,7 +2,6 @@
 
 import * as Sentry from '@sentry/browser';
 import { Severity } from '@sentry/types';
-import { getCurrentEnvironment } from './env-service';
 
 export function captureDebug(
   message: string,
@@ -69,7 +68,6 @@ export function captureFeedback(
   messageInfo: { [key: string]: string } = {},
   isSentryEnabled: boolean = false
 ): void {
-  captureDebug(`Current env: ${getCurrentEnvironment(false)}`);
   if (isSentryEnabled) {
     Sentry.withScope(scope => {
       Object.entries(messageInfo).forEach(([key, value]) => {
