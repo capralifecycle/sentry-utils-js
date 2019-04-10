@@ -10,12 +10,13 @@ $ npm version <major|minor|patch> && npm publish
 
 ## Usage
 
-```
-getDefaultConfiguration({
-    appName: 'example-app',
-    appVersion: '1.0.0',
-    isProd: true/false
-    sentryDsn: '...'
+```javascript
+initSentry({
+  appName: 'example-app',
+  appVersion: '1.0.0',
+  buildTimestamp: '2019-04-11T00:06+02:00', // Optional
+  isProd: true/false // Optional
+  sentryDsn: '...'
 })
 ```
 
@@ -47,7 +48,7 @@ They will be determined based on origin. Currently supporting:
 - https://some-project-{Environment}.company.xyz --> {Environment}
 - https://{Environment}-some-project.company.xyz --> {Environment}
 - https://some-{Environment}-project.company.xyz --> {Environment}
-- https://www.${Environment}.company.xyz --> {Environment}
+- https://www.{Environment}.company.xyz --> {Environment}
 
 ### Determining if Sentry is enabled for the application
 
