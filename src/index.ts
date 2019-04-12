@@ -7,7 +7,8 @@ import {
   captureException,
   captureFeedback,
   captureInfo,
-  captureWarn
+  captureWarn,
+  IExtraInfo
 } from './services/log-service';
 import { IRequiredConfiguration } from './types/configuration';
 
@@ -43,12 +44,21 @@ export function initSentry({
 }
 
 export const logService = {
-  debug: (message: string): void => captureDebug(message, isSentryEnabled),
-  error: (message: string): void => captureError(message, isSentryEnabled),
-  exception: (err: any, errInfo?: any): void =>
-    captureException(err, errInfo, isSentryEnabled),
-  feedback: (message: string, messageInfo?: { [key: string]: string }): void =>
-    captureFeedback(message, messageInfo, isSentryEnabled),
-  info: (message: string): void => captureInfo(message, isSentryEnabled),
-  warn: (message: string): void => captureWarn(message, isSentryEnabled)
+  debug: (message: string, extraInfo: IExtraInfo = {}): void =>
+    captureDebug(message, extraInfo, isSentryEnabled),
+
+  error: (message: string, extraInfo: IExtraInfo = {}): void =>
+    captureError(message, extraInfo, isSentryEnabled),
+
+  exception: (err: any, extraInfo: IExtraInfo = {}): void =>
+    captureException(err, extraInfo, isSentryEnabled),
+
+  feedback: (message: string, extraInfo: IExtraInfo = {}): void =>
+    captureFeedback(message, extraInfo, isSentryEnabled),
+
+  info: (message: string, extraInfo: IExtraInfo = {}): void =>
+    captureInfo(message, extraInfo, isSentryEnabled),
+
+  warn: (message: string, extraInfo: IExtraInfo = {}): void =>
+    captureWarn(message, extraInfo, isSentryEnabled)
 };
