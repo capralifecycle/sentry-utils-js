@@ -1,7 +1,5 @@
 # Utils for monitoring web applications with Sentry
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7cb78cd9dd9440a48ff6b5646a2fa3cb)](https://www.codacy.com/app/oyvindym/sentry-utils-js?utm_source=github.com&utm_medium=referral&utm_content=capraconsulting/sentry-utils-js&utm_campaign=Badge_Grade)
-
 ## Deploy new version
 
 ```
