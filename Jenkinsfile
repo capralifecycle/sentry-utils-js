@@ -12,9 +12,7 @@ buildConfig([
   dockerNode {
     checkout scm
 
-    def img = docker.image('node:12-alpine')
-    img.pull()
-
+    def img = docker.build('sentry-utils-js')
     img.inside {
       stage('Install dependencies') {
         sh 'npm ci'
