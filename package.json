@@ -2,11 +2,12 @@
   "name": "@capraconsulting/sentry-utils-js",
   "version": "0.0.0",
   "description": "Utils for monitoring webapps with Sentry",
-  "main": "lib/index.js",
-  "module": "lib/index.es.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "lib/**/*"
+    "dist/",
+    "src/"
   ],
   "scripts": {
     "build": "rollup -c",

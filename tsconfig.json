@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "outDir": "./lib/",
-    "sourceMap": true,
-    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "lib": ["es2017", "dom"],
     "module": "es6",
-    "target": "es5",
-    "lib": ["esnext", "dom"],
     "moduleResolution": "node",
-    "esModuleInterop": true
-  }
+    "strictNullChecks": true,
+    "target": "es5"
+  },
+  "include": ["./src/"],
+  "exclude": ["./src/**/*.test.ts"]
 }
