@@ -6,20 +6,15 @@ export default {
   output: [
     // CommonJS
     {
-      output: {
-        file: pkg.main,
-        format: 'cjs',
-        sourcemap: true
-      }
+      file: pkg.main,
+      format: 'cjs',
+      sourcemap: true
     },
     // ES
     {
-      input: 'src/index.ts',
-      output: {
-        file: pkg.module,
-        format: 'es',
-        sourcemap: true
-      }
+      file: pkg.module,
+      format: 'es',
+      sourcemap: true
     }
   ],
   external: [
