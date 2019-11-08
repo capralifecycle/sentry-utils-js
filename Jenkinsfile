@@ -41,7 +41,7 @@ buildConfig([
       if (env.BRANCH_NAME == 'master') {
         stage('Build, verify and possibly release') {
           withSemanticReleaseEnv {
-            sh 'npm run semantic release'
+            sh 'npm run semantic-release'
           }
         }
       } else {
