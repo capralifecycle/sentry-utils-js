@@ -34,11 +34,7 @@ export function initSentry({
 
   if (buildTimestamp) {
     Sentry.configureScope(scope => {
-      if (/\d*/.test(buildTimestamp)) {
-        scope.setTag(BUILD_TIME_TAG, new Date(buildTimestamp).toISOString());
-      } else {
-        scope.setTag(BUILD_TIME_TAG, buildTimestamp);
-      }
+      scope.setTag(BUILD_TIME_TAG, buildTimestamp);
     });
   }
 
