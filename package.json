@@ -2,17 +2,18 @@
   "name": "@capraconsulting/sentry-utils-js",
   "version": "2.2.0",
   "description": "Utils for monitoring webapps with Sentry",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "source": "src/index.ts",
+  "main": "lib/index.js",
+  "module": "lib/index.es.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
-    "build": "rimraf dist && microbundle",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "build": "rollup -c",
+    "test": "jest --coverage src",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "prettier": "prettier --config ./.prettierrc --write 'src/**/*.ts'",
-    "prepublishOnly": "npm run lint && npm run test && npm run build",
-    "postversion": "git push && git push --tags"
+    "prettier": "prettier --config .prettierrc --write 'src/**/*.ts'",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
@@ -25,15 +26,16 @@
     "@types/jest-each": "0.3.4",
     "jest": "24.9.0",
     "jest-each": "24.9.0",
-    "microbundle": "0.11.0",
     "prettier": "1.18.2",
-    "rimraf": "3.0.0",
+    "rollup": "1.26.3",
+    "rollup-plugin-typescript2": "0.25.2",
+    "semantic-release": "15.13.30",
     "ts-jest": "24.1.0",
     "tslint": "5.20.1",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.7.2"
   },
   "dependencies": {
-    "@sentry/browser": "^5.4.0"
+    "@sentry/browser": "5.7.1"
   }
 }
