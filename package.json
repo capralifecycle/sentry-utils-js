@@ -1,6 +1,6 @@
 {
   "name": "@capraconsulting/sentry-utils-js",
-  "version": "2.2.0",
+  "version": "0.0.0",
   "description": "Utils for monitoring webapps with Sentry",
   "main": "lib/index.js",
   "module": "lib/index.es.js",

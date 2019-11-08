@@ -14,8 +14,7 @@ export default [
     input: 'src/index.ts',
     output: {
       file: pkg.main,
-      format: 'cjs',
-      sourcemap: true
+      format: 'cjs'
     },
     external,
     plugins
