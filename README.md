@@ -4,8 +4,7 @@
 
 ```javascript
 initSentry({
-  appName: 'example-app',
-  appVersion: '1.0.0',
+  release: 'ec1c1c',
   buildTimestamp: '2019-04-11T00:06+02:00', // Optional
   isProd: true/false // Optional
   sentryDsn: '...'
