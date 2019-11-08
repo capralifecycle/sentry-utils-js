@@ -10,7 +10,7 @@
     "src/"
   ],
   "scripts": {
-    "build": "rollup -c",
+    "build": "rimraf es dist && rollup -c",
     "test": "jest --coverage src",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "prettier": "prettier --config .prettierrc --write 'src/**/*.ts'",
@@ -30,6 +30,7 @@
     "jest-each": "24.9.0",
     "prettier": "1.18.2",
     "rollup": "1.26.3",
+    "rimraf": "3.0.0",
     "rollup-plugin-typescript2": "0.25.2",
     "semantic-release": "15.13.30",
     "ts-jest": "24.1.0",
