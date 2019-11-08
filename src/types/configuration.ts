@@ -1,6 +1,5 @@
 export interface IRequiredConfiguration {
-  appName: string;
-  appVersion: string;
+  release: string;
   buildTimestamp?: string;
   isProd?: boolean;
   sentryDsn: string;

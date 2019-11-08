@@ -17,17 +17,15 @@ const BUILD_TIME_TAG = 'buildTime';
 let isSentryEnabled = false;
 
 export function initSentry({
-  appName,
-  appVersion,
+  release,
   buildTimestamp,
   isProd = false,
   sentryDsn
 }: IRequiredConfiguration) {
   const config: Sentry.BrowserOptions = {
     ...getDefaultConfiguration({
-      appName,
-      appVersion,
-      isProd
+      isProd,
+      release
     }),
     dsn: sentryDsn
   };
@@ -36,7 +34,11 @@ export function initSentry({
 
   if (buildTimestamp) {
     Sentry.configureScope(scope => {
-      scope.setTag(BUILD_TIME_TAG, buildTimestamp);
+      if (/\d*/.test(buildTimestamp)) {
+        scope.setTag(BUILD_TIME_TAG, new Date(buildTimestamp).toISOString());
+      } else {
+        scope.setTag(BUILD_TIME_TAG, buildTimestamp);
+      }
     });
   }
 
