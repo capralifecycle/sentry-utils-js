@@ -1,11 +1,5 @@
 # Utils for monitoring web applications with Sentry
 
-## Deploy new version
-
-```
-$ npm version <major|minor|patch> && npm publish
-```
-
 ## Usage
 
 ```javascript
@@ -51,3 +45,10 @@ They will be determined based on origin. Currently supporting:
 ### Determining if Sentry is enabled for the application
 
 Currently simply checks if provided DSN is available and if it has length more than zero.
+
+## Contributing
+
+This project uses [semantic release](https://semantic-release.gitbook.io/semantic-release/)
+to automate releases and follows
+[Git commit guidelines](https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit)
+from the Angular project.
