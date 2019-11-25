@@ -38,7 +38,7 @@
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.7.2"
   },
-  "peerDependencies": {
+  "dependencies": {
     "@sentry/browser": "5.9.1"
   }
 }
