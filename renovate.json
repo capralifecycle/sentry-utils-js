@@ -1,16 +1,5 @@
 {
-  "extends": ["config:js-lib"],
+  "extends": ["github>capraconsulting/renovate-config:library"],
   "automerge": true,
-  "automergeType": "branch",
-  "lockFileMaintenance": {
-    "enabled": true
-  },
-  "major": {
-    "automerge": false
-  },
-  "masterIssue": true,
-  "pin": {
-    "automerge": true
-  },
-  "semanticCommits": true
+  "automergeType": "branch"
 }
