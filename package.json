@@ -39,6 +39,6 @@
     "typescript": "3.7.4"
   },
   "dependencies": {
-    "@sentry/browser": "5.10.2"
+    "@sentry/browser": "5.11.0"
   }
 }
