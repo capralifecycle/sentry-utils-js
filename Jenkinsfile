@@ -12,41 +12,24 @@ buildConfig([
   dockerNode {
     checkout scm
 
-    def img = docker.image("923402097046.dkr.ecr.eu-central-1.amazonaws.com/buildtools/tool/node:12-alpine")
-    img.pull()
-
-    img.inside {
-      stage("Install dependencies") {
+    insideToolImage("node:12-alpine") {
+      stage("Install dependencies and build") {
         sh "npm ci"
       }
 
-      stage("Lint") {
-        sh 'npm run lint'
-      }
-
-      stage("Tests") {
+      stage("Lint and test") {
+        sh "npm run lint"
         sh "npm test"
       }
 
-      // We only run semantic-release on the master branch,
+      // We only run semantic-release on the release branches,
       // as we do not want credentials to be exposed to the job
       // on other branches or in PRs.
-      //
-      // To have the correct version applied to the build we need
-      // to use a hook that is run during semantic-release execution.
-      // For this we use the "prepack" hook. This also ensures
-      // that "npm link" and alike builds the code, and we can
-      // trigger the same hook on other branches.
-
-      if (env.BRANCH_NAME == "master") {
-        stage("Build, verify and possibly release") {
+      if (env.BRANCH_NAME ==~ /^(master|\d+\.(\d+|x)(\.x)?)$/) {
+        stage("Semantic release") {
           withSemanticReleaseEnv {
             sh "npm run semantic-release"
           }
-        }
-      } else {
-        stage("Build and verify") {
-          sh "npm pack"
         }
       }
     }

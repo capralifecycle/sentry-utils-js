@@ -14,7 +14,7 @@
     "test": "jest --coverage src",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepack": "npm run build",
+    "prepare": "npm run build",
     "semantic-release": "semantic-release"
   },
   "repository": {
