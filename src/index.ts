@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/browser';
-import { getDefaultConfiguration } from './services/config-service';
 import {
   captureDebug,
   captureError,
@@ -9,7 +8,14 @@ import {
   captureWarn,
   IExtraInfo,
 } from './services/log-service';
-import { IRequiredConfiguration } from './types';
+import makeThrottleByMeanLifetime from './throttle';
+
+interface InitSentry {
+  release: string;
+  buildTimestamp?: string;
+  environment?: string;
+  sentryDsn: string;
+}
 
 const BUILD_TIME_TAG = 'buildTime';
 
@@ -18,14 +24,15 @@ let isSentryEnabled = false;
 export function initSentry({
   release,
   buildTimestamp,
-  isProd = false,
+  environment,
   sentryDsn,
-}: IRequiredConfiguration): void {
+}: InitSentry): void {
+  const throttle = makeThrottleByMeanLifetime(60 * 1000, 4);
+
   const config: Sentry.BrowserOptions = {
-    ...getDefaultConfiguration({
-      isProd,
-      release,
-    }),
+    beforeSend: (event) => (throttle() ? event : null),
+    environment,
+    release,
     dsn: sentryDsn,
   };
 
