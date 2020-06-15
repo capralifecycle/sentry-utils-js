@@ -1,5 +1,5 @@
 /**
- * Make a throttler that will return true if not throttled.
+ * Make a throttler that will return true if being throttled.
  *
  * The time period is the mean lifetime for a request counting
  * towards [maxRequests].
@@ -14,7 +14,7 @@ export default function makeThrottleByMeanLifetime(
   const exp = Math.exp(-1.0 / timePeriodMs);
   let count = 0;
 
-  return () => {
+  return function isThrottled() {
     const now = new Date().getTime();
     const ticks = now - lastTimestamp;
     lastTimestamp = now;

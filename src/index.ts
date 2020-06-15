@@ -11,36 +11,37 @@ import {
 import makeThrottleByMeanLifetime from './throttle';
 
 interface InitSentry {
-  release: string;
-  buildTimestamp?: string;
-  environment?: string;
-  sentryDsn: string;
+  options: Sentry.BrowserOptions;
+  buildTime?: string;
 }
 
 const BUILD_TIME_TAG = 'buildTime';
 
 let isSentryEnabled = false;
 
-export function initSentry({
-  release,
-  buildTimestamp,
-  environment,
-  sentryDsn,
-}: InitSentry): void {
-  const throttle = makeThrottleByMeanLifetime(60 * 1000, 4);
+export function initSentry({ options, buildTime }: InitSentry): void {
+  const isThrottled = makeThrottleByMeanLifetime(60 * 1000, 4);
 
   const config: Sentry.BrowserOptions = {
-    beforeSend: (event) => (throttle() ? event : null),
-    environment,
-    release,
-    dsn: sentryDsn,
+    ...options,
+    beforeSend: (event, hint) => {
+      if (isThrottled()) {
+        return null;
+      }
+
+      if (options.beforeSend) {
+        return options.beforeSend(event, hint);
+      }
+
+      return event;
+    },
   };
 
   Sentry.init(config);
 
-  if (buildTimestamp) {
+  if (buildTime) {
     Sentry.configureScope((scope) => {
-      scope.setTag(BUILD_TIME_TAG, buildTimestamp);
+      scope.setTag(BUILD_TIME_TAG, buildTime);
     });
   }
 

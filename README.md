@@ -4,11 +4,14 @@
 
 ```javascript
 initSentry({
-  release: 'ec1c1c',
-  buildTimestamp: '2019-04-11T00:06+02:00', // Optional
-  environment: "...", // Optional, e.g. prod
-  sentryDsn: '...'
-})
+  // Options specified by Sentry, see type Sentry.BrowserOptions.
+  options: {
+    release: 'ec1c1c',
+    environment: '...',
+    dns: '...',
+  },
+  buildTime: '2019-04-11T00:06+02:00', // Optional
+});
 ```
 
 ## Features
