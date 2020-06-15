@@ -7,7 +7,7 @@ import {
   captureInfo,
   captureWarn,
   IExtraInfo,
-} from './services/log-service';
+} from './log';
 import makeThrottleByMeanLifetime from './throttle';
 
 interface InitSentry {

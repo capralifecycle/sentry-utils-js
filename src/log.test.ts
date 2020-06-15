@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import { Severity } from '@sentry/types';
-import { captureDebug, captureInfo } from './log-service';
+import { captureDebug, captureInfo } from './log';
 
 const mockLogToConsole = jest.fn();
 const mockCaptureMessage = jest.spyOn(Sentry, 'captureMessage');
