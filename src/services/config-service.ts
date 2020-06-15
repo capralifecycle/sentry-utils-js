@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
+import makeThrottleByMeanLifetime from '../throttle';
 import { IRequiredConfiguration } from '../types';
 import { getCurrentEnvironment } from './env-service';
-import makeThrottleByMeanLifetime from './throttle-service';
 
 export function getDefaultConfiguration({
   release,
