@@ -7,7 +7,5 @@
     "moduleResolution": "node",
     "strictNullChecks": true,
     "target": "es5"
-  },
-  "include": ["./src/"],
-  "exclude": ["./src/**/*.test.ts"]
+  }
 }

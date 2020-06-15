@@ -1,10 +1,9 @@
 import each from 'jest-each';
-
 import {
   containsEnvironmentTag,
   Environment,
   getCurrentEnvironment,
-  isLocalEnvironment
+  isLocalEnvironment,
 } from './env-service';
 
 describe('sentry-util', () => {
@@ -34,7 +33,7 @@ describe('sentry-util', () => {
         ${'https://www.dev.company.xyz'}                      | ${'qa'}   | ${false}
       `.it(
       'should return $expectedResult for origin: $origin and tag: $tag',
-      ({ origin, tag, expectedResult }: any) => {
+      ({ origin, tag, expectedResult }) => {
         expect(containsEnvironmentTag(origin, tag)).toBe(expectedResult);
       }
     );
@@ -44,9 +43,9 @@ describe('sentry-util', () => {
     function setOrigin(origin: string) {
       Object.defineProperty(window, 'location', {
         value: {
-          origin
+          origin,
         },
-        writable: true
+        writable: true,
       });
     }
 

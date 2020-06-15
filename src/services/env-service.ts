@@ -6,7 +6,7 @@ export enum Environment {
   SYSTEST = 'systest',
   DEVTEST = 'devtest',
   TEST = 'test',
-  UNKNOWN = 'unknown'
+  UNKNOWN = 'unknown',
 }
 
 const ELIGIBLE_ENVIRONMENT_TAGS = [
@@ -14,7 +14,7 @@ const ELIGIBLE_ENVIRONMENT_TAGS = [
   Environment.TEST,
   Environment.QA,
   Environment.DEVTEST,
-  Environment.SYSTEST
+  Environment.SYSTEST,
 ];
 
 function isHttps(origin: string): boolean {
@@ -39,7 +39,7 @@ export function getCurrentEnvironment(isProd: boolean): Environment {
     return Environment.LOCAL;
   }
 
-  const environment = ELIGIBLE_ENVIRONMENT_TAGS.find(tag =>
+  const environment = ELIGIBLE_ENVIRONMENT_TAGS.find((tag) =>
     containsEnvironmentTag(window.location.origin, tag)
   );
 

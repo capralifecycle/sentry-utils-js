@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/browser';
 import { Severity } from '@sentry/types';
-
 import { captureDebug, captureInfo } from './log-service';
 
 const mockLogToConsole = jest.fn();
@@ -10,7 +9,7 @@ describe('log-service', () => {
   beforeEach(() => {
     global.console = {
       ...global.console,
-      log: mockLogToConsole
+      log: mockLogToConsole,
     };
   });
   describe('with sentry enabled', () => {

@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/browser';
-
 import { getDefaultConfiguration } from './services/config-service';
 import {
   captureDebug,
@@ -8,9 +7,9 @@ import {
   captureFeedback,
   captureInfo,
   captureWarn,
-  IExtraInfo
+  IExtraInfo,
 } from './services/log-service';
-import { IRequiredConfiguration } from './types/configuration';
+import { IRequiredConfiguration } from './types';
 
 const BUILD_TIME_TAG = 'buildTime';
 
@@ -20,20 +19,20 @@ export function initSentry({
   release,
   buildTimestamp,
   isProd = false,
-  sentryDsn
-}: IRequiredConfiguration) {
+  sentryDsn,
+}: IRequiredConfiguration): void {
   const config: Sentry.BrowserOptions = {
     ...getDefaultConfiguration({
       isProd,
-      release
+      release,
     }),
-    dsn: sentryDsn
+    dsn: sentryDsn,
   };
 
   Sentry.init(config);
 
   if (buildTimestamp) {
-    Sentry.configureScope(scope => {
+    Sentry.configureScope((scope) => {
       scope.setTag(BUILD_TIME_TAG, buildTimestamp);
     });
   }
@@ -48,6 +47,7 @@ export const logService = {
   error: (message: string, extraInfo: IExtraInfo = {}): void =>
     captureError(message, extraInfo, isSentryEnabled),
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
   exception: (err: any, extraInfo: IExtraInfo = {}): void =>
     captureException(err, extraInfo, isSentryEnabled),
 
@@ -58,5 +58,5 @@ export const logService = {
     captureInfo(message, extraInfo, isSentryEnabled),
 
   warn: (message: string, extraInfo: IExtraInfo = {}): void =>
-    captureWarn(message, extraInfo, isSentryEnabled)
+    captureWarn(message, extraInfo, isSentryEnabled),
 };

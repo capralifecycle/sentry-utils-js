@@ -10,7 +10,6 @@ function logToConsole(
   message: string,
   extraInfo: IExtraInfo
 ): void {
-  /* tslint:disable-next-line no-console */
   console.log(
     `${severity.toUpperCase()}: ${message} - ${JSON.stringify(extraInfo)}`
   );
@@ -21,7 +20,7 @@ function logToSentry(
   message: string,
   extraInfo: IExtraInfo = {}
 ): void {
-  Sentry.withScope(scope => {
+  Sentry.withScope((scope) => {
     scope.setExtras(extraInfo);
     Sentry.captureMessage(message, severity);
   });
@@ -30,7 +29,7 @@ function logToSentry(
 export function captureDebug(
   message: string,
   extraInfo: IExtraInfo,
-  isSentryEnabled: boolean = false
+  isSentryEnabled = false
 ): void {
   if (!isSentryEnabled) {
     logToConsole(Severity.Debug, message, extraInfo);
@@ -40,7 +39,7 @@ export function captureDebug(
 export function captureError(
   message: string,
   extraInfo: IExtraInfo,
-  isSentryEnabled: boolean = false
+  isSentryEnabled = false
 ): void {
   isSentryEnabled
     ? logToSentry(Severity.Error, message, extraInfo)
@@ -50,7 +49,7 @@ export function captureError(
 export function captureInfo(
   message: string,
   extraInfo: IExtraInfo,
-  isSentryEnabled: boolean = false
+  isSentryEnabled = false
 ): void {
   isSentryEnabled
     ? logToSentry(Severity.Info, message, extraInfo)
@@ -60,7 +59,7 @@ export function captureInfo(
 export function captureWarn(
   message: string,
   extraInfo: IExtraInfo,
-  isSentryEnabled: boolean = false
+  isSentryEnabled = false
 ): void {
   isSentryEnabled
     ? logToSentry(Severity.Warning, message, extraInfo)
@@ -68,12 +67,13 @@ export function captureWarn(
 }
 
 export function captureException(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
   err: any,
   errInfo: IExtraInfo,
-  isSentryEnabled: boolean = false
+  isSentryEnabled = false
 ): void {
   if (isSentryEnabled) {
-    Sentry.withScope(scope => {
+    Sentry.withScope((scope) => {
       scope.setExtras(errInfo);
       Sentry.captureException(err);
     });
@@ -85,7 +85,7 @@ export function captureException(
 export function captureFeedback(
   message: string,
   extraInfo: IExtraInfo,
-  isSentryEnabled: boolean = false
+  isSentryEnabled = false
 ): void {
   const severity = Severity.fromString('feedback');
 
