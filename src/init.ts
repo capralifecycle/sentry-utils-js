@@ -48,23 +48,27 @@ export function initSentry({ options, buildTime }: InitSentry): void {
   isSentryEnabled = true;
 }
 
-export const logService = {
-  debug: (message: string, extraInfo: IExtraInfo = {}): void =>
-    captureDebug(message, extraInfo, isSentryEnabled),
+export function debug(message: string, extraInfo: IExtraInfo = {}): void {
+  captureDebug(message, extraInfo, isSentryEnabled);
+}
 
-  error: (message: string, extraInfo: IExtraInfo = {}): void =>
-    captureError(message, extraInfo, isSentryEnabled),
+export function error(message: string, extraInfo: IExtraInfo = {}): void {
+  captureError(message, extraInfo, isSentryEnabled);
+}
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
-  exception: (err: any, extraInfo: IExtraInfo = {}): void =>
-    captureException(err, extraInfo, isSentryEnabled),
+// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
+export function exception(err: any, extraInfo: IExtraInfo = {}): void {
+  captureException(err, extraInfo, isSentryEnabled);
+}
 
-  feedback: (message: string, extraInfo: IExtraInfo = {}): void =>
-    captureFeedback(message, extraInfo, isSentryEnabled),
+export function feedback(message: string, extraInfo: IExtraInfo = {}): void {
+  captureFeedback(message, extraInfo, isSentryEnabled);
+}
 
-  info: (message: string, extraInfo: IExtraInfo = {}): void =>
-    captureInfo(message, extraInfo, isSentryEnabled),
+export function info(message: string, extraInfo: IExtraInfo = {}): void {
+  captureInfo(message, extraInfo, isSentryEnabled);
+}
 
-  warn: (message: string, extraInfo: IExtraInfo = {}): void =>
-    captureWarn(message, extraInfo, isSentryEnabled),
-};
+export function warn(message: string, extraInfo: IExtraInfo = {}): void {
+  captureWarn(message, extraInfo, isSentryEnabled);
+}
