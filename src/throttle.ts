@@ -8,22 +8,22 @@
  */
 export default function makeThrottleByMeanLifetime(
   timePeriodMs: number,
-  maxRequests: number
+  maxRequests: number,
 ): () => boolean {
-  let lastTimestamp = new Date().getTime();
-  const exp = Math.exp(-1.0 / timePeriodMs);
-  let count = 0;
+  let lastTimestamp = new Date().getTime()
+  const exp = Math.exp(-1.0 / timePeriodMs)
+  let count = 0
 
   return function isThrottled() {
-    const now = new Date().getTime();
-    const ticks = now - lastTimestamp;
-    lastTimestamp = now;
+    const now = new Date().getTime()
+    const ticks = now - lastTimestamp
+    lastTimestamp = now
 
-    count = Math.pow(exp, ticks) * count;
-    const accept = count <= maxRequests;
+    count = Math.pow(exp, ticks) * count
+    const accept = count <= maxRequests
     if (accept) {
-      count++;
+      count++
     }
-    return accept;
-  };
+    return accept
+  }
 }
