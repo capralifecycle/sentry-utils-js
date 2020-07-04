@@ -46,7 +46,7 @@
     "typescript": "3.9.5"
   },
   "dependencies": {
-    "@sentry/browser": "5.18.1"
+    "@sentry/browser": "5.19.0"
   },
   "husky": {
     "hooks": {
