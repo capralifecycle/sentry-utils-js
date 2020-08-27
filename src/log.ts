@@ -1,95 +1,112 @@
 import * as Sentry from "@sentry/browser"
 import { Severity } from "@sentry/types"
 
-export interface IExtraInfo {
-  [key: string]: string
-}
+type Tags = Record<string, string>
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Extras = Record<string, any>
 
 function logToConsole(
   severity: Severity,
   message: string,
-  extraInfo: IExtraInfo,
+  tags?: Tags,
+  extras?: Extras,
 ): void {
-  console.log(
-    `${severity.toUpperCase()}: ${message} - ${JSON.stringify(extraInfo)}`,
-  )
+  console.log(`${severity.toUpperCase()}: ${message}`, tags, extras)
 }
 
 function logToSentry(
   severity: Severity,
   message: string,
-  extraInfo: IExtraInfo = {},
+  tags?: Tags,
+  extras?: Extras,
 ): void {
   Sentry.withScope((scope) => {
-    scope.setExtras(extraInfo)
+    if (tags) {
+      scope.setTags(tags)
+    }
+    if (extras) {
+      scope.setExtras(extras)
+    }
     Sentry.captureMessage(message, severity)
   })
 }
 
 export function captureDebug(
   message: string,
-  extraInfo: IExtraInfo,
+  tags?: Tags,
+  extras?: Extras,
   isSentryEnabled = false,
 ): void {
   if (!isSentryEnabled) {
-    logToConsole(Severity.Debug, message, extraInfo)
+    logToConsole(Severity.Debug, message, tags, extras)
   }
 }
 
 export function captureError(
   message: string,
-  extraInfo: IExtraInfo,
+  tags?: Tags,
+  extras?: Extras,
   isSentryEnabled = false,
 ): void {
   isSentryEnabled
-    ? logToSentry(Severity.Error, message, extraInfo)
-    : logToConsole(Severity.Error, message, extraInfo)
+    ? logToSentry(Severity.Error, message, tags, extras)
+    : logToConsole(Severity.Error, message, tags, extras)
 }
 
 export function captureInfo(
   message: string,
-  extraInfo: IExtraInfo,
+  tags?: Tags,
+  extras?: Extras,
   isSentryEnabled = false,
 ): void {
   isSentryEnabled
-    ? logToSentry(Severity.Info, message, extraInfo)
-    : logToConsole(Severity.Info, message, extraInfo)
+    ? logToSentry(Severity.Info, message, tags, extras)
+    : logToConsole(Severity.Info, message, tags, extras)
 }
 
 export function captureWarn(
   message: string,
-  extraInfo: IExtraInfo,
+  tags?: Tags,
+  extras?: Extras,
   isSentryEnabled = false,
 ): void {
   isSentryEnabled
-    ? logToSentry(Severity.Warning, message, extraInfo)
-    : logToConsole(Severity.Warning, message, extraInfo)
+    ? logToSentry(Severity.Warning, message, tags, extras)
+    : logToConsole(Severity.Warning, message, tags, extras)
 }
 
 export function captureException(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
   err: any,
-  errInfo: IExtraInfo,
+  tags?: Tags,
+  extras?: Extras,
   isSentryEnabled = false,
 ): void {
   if (isSentryEnabled) {
     Sentry.withScope((scope) => {
-      scope.setExtras(errInfo)
+      if (tags) {
+        scope.setTags(tags)
+      }
+      if (extras) {
+        scope.setExtras(extras)
+      }
       Sentry.captureException(err)
     })
   } else {
-    logToConsole(Severity.fromString("exception"), err, errInfo)
+    logToConsole(Severity.fromString("exception"), err, tags, extras)
   }
 }
 
 export function captureFeedback(
   message: string,
-  extraInfo: IExtraInfo,
+  tags?: Tags,
+  extras?: Extras,
   isSentryEnabled = false,
 ): void {
   const severity = Severity.fromString("feedback")
 
   isSentryEnabled
-    ? logToSentry(severity, message, extraInfo)
-    : logToConsole(severity, message, extraInfo)
+    ? logToSentry(severity, message, tags, extras)
+    : logToConsole(severity, message, tags, extras)
 }
