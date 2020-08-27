@@ -72,3 +72,21 @@ export function info(message: string, extraInfo: IExtraInfo = {}): void {
 export function warn(message: string, extraInfo: IExtraInfo = {}): void {
   captureWarn(message, extraInfo, isSentryEnabled)
 }
+
+/**
+ * Put a message in the console letting the developer know that Sentry
+ * is not enabled.
+ *
+ * Only call this if you do not initialize Sentry.
+ */
+export function reportSentryNotEnabled(): void {
+  if (isSentryEnabled) {
+    throw new Error(
+      "Cannot call reportSentryNotEnabled when Sentry is initialized",
+    )
+  }
+
+  console.info(
+    "Sentry is not enabled. Logs will appear in console. This should only occur locally.",
+  )
+}
