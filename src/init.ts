@@ -32,12 +32,12 @@ const BUILD_TIME_TAG = "buildTime"
 let isSentryEnabled = false
 
 export function initSentry({ options, buildTime }: InitSentry): void {
-  const isThrottled = makeThrottleByMeanLifetime(60 * 1000, 4)
+  const checkIsThrottled = makeThrottleByMeanLifetime(60 * 1000, 4)
 
   const config: Sentry.BrowserOptions = {
     ...options,
     beforeSend: (event, hint) => {
-      if (isThrottled()) {
+      if (checkIsThrottled()) {
         return null
       }
 

@@ -14,7 +14,7 @@ export default function makeThrottleByMeanLifetime(
   const exp = Math.exp(-1.0 / timePeriodMs)
   let count = 0
 
-  return function isThrottled() {
+  return function checkIsThrottled() {
     const now = new Date().getTime()
     const ticks = now - lastTimestamp
     lastTimestamp = now
@@ -24,6 +24,6 @@ export default function makeThrottleByMeanLifetime(
     if (accept) {
       count++
     }
-    return accept
+    return !accept
   }
 }
