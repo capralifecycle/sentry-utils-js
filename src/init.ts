@@ -1,11 +1,11 @@
 import * as Sentry from "@sentry/browser"
 import {
-  captureDebug,
-  captureError,
-  captureException,
-  captureFeedback,
-  captureInfo,
-  captureWarn,
+  captureDebug as _captureDebug,
+  captureError as _captureError,
+  captureException as _captureException,
+  captureFeedback as _captureFeedback,
+  captureInfo as _captureInfo,
+  captureWarn as _captureWarn,
 } from "./log"
 import makeThrottleByMeanLifetime from "./throttle"
 
@@ -60,41 +60,53 @@ export function initSentry({ options, buildTime }: InitSentry): void {
   isSentryEnabled = true
 }
 
-export function debug(
+export function captureDebug(
   message: string,
   tags?: Tags,
   options?: LogOptions,
 ): void {
-  captureDebug(message, tags, options?.extras, isSentryEnabled)
+  _captureDebug(message, tags, options?.extras, isSentryEnabled)
 }
 
-export function error(
+export function captureError(
   message: string,
   tags?: Tags,
   options?: LogOptions,
 ): void {
-  captureError(message, tags, options?.extras, isSentryEnabled)
+  _captureError(message, tags, options?.extras, isSentryEnabled)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/explicit-module-boundary-types
-export function exception(err: any, tags?: Tags, options?: LogOptions): void {
-  captureException(err, tags, options?.extras, isSentryEnabled)
+export function captureException(
+  err: any,
+  tags?: Tags,
+  options?: LogOptions,
+): void {
+  _captureException(err, tags, options?.extras, isSentryEnabled)
 }
 
-export function feedback(
+export function captureFeedback(
   message: string,
   tags?: Tags,
   options?: LogOptions,
 ): void {
-  captureFeedback(message, tags, options?.extras, isSentryEnabled)
+  _captureFeedback(message, tags, options?.extras, isSentryEnabled)
 }
 
-export function info(message: string, tags?: Tags, options?: LogOptions): void {
-  captureInfo(message, tags, options?.extras, isSentryEnabled)
+export function captureInfo(
+  message: string,
+  tags?: Tags,
+  options?: LogOptions,
+): void {
+  _captureInfo(message, tags, options?.extras, isSentryEnabled)
 }
 
-export function warn(message: string, tags?: Tags, options?: LogOptions): void {
-  captureWarn(message, tags, options?.extras, isSentryEnabled)
+export function captureWarn(
+  message: string,
+  tags?: Tags,
+  options?: LogOptions,
+): void {
+  _captureWarn(message, tags, options?.extras, isSentryEnabled)
 }
 
 /**
