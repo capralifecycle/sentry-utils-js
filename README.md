@@ -8,7 +8,7 @@ initSentry({
   options: {
     release: 'ec1c1c',
     environment: '...',
-    dns: '...',
+    dsn: '...',
   },
   buildTime: '2019-04-11T00:06+02:00', // Optional
 });
