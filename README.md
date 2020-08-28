@@ -2,48 +2,80 @@
 
 ## Usage
 
+Install the dependency:
+
+```bash
+npm install --save-exact @capraconsulting/sentry-utils-js
+```
+
+Find your DSN in Sentry under "Settings" -> "Client Keys", to be used
+in the next snippet.
+
+Initialize Sentry in your application. This should be done as early as
+possible, preferably before other imports, so that it can catch errors
+during the rest of initialization.
+
 ```javascript
 initSentry({
-  release: 'ec1c1c',
-  buildTimestamp: '2019-04-11T00:06+02:00', // Optional
-  isProd: true/false // Optional
-  sentryDsn: '...'
-})
+  // Options specified by Sentry, see type Sentry.BrowserOptions.
+  options: {
+    release: 'ec1c1c',
+    environment: '...',
+    dsn: '...',
+  },
+  buildTime: '2019-04-11T00:06+02:00', // Optional
+});
 ```
+
+The following is a full example of how this can be done:
+
+```ts
+import {
+  initSentry,
+  reportSentryNotEnabled,
+} from "@capraconsulting/sentry-utils-js";
+import { getConfig } from "./common/config";
+
+const config = getConfig();
+
+if (config.sentryDsn) {
+  initSentry({
+    options: {
+      release: __BUILD_INFO__.commitHash,
+      environment: config.sentryEnv,
+      dsn: config.sentryDsn,
+    },
+    buildTime: __BUILD_INFO__.appBuildTime,
+  });
+} else {
+  reportSentryNotEnabled();
+}
+```
+
+Capture log events when needed:
+
+```ts
+import { captureError } from "@capraconsulting/sentry-utils-js";
+
+if (...) {
+  captureError("Something bad happened")
+}
+```
+
+See types for additional capture methods and parameters that can be used.
 
 ## Features
 
-- Throttling of error messages to prevent flooding Sentry
-- Determining environment for application based on origin
-- Determining if Sentry is enabled for the application
+- Throttles messages to prevent flooding Sentry
 - Provides default configuration for Sentry initialization
+- Provides more opiniated helpers to capture messages
+- Includes `buildTime` as tag if provided during initialization
 
 ### Throttling
 
-Evaluate and throttle before sending message to Sentry in case of excessive amount of failures. This will allow for a spike of 4-5 requests, decaying using mean lifetime of 1 minute.
-
-### Determining environment for application based on origin
-
-Eligible environment tags in url (such as 'https://dev.company.xyz') are as follows:
-
-- dev
-- test
-- qa
-- devtest
-- systest
-
-They will be determined based on origin. Currently supporting:
-
-- http://localhost:{PORT} --> local
-- https://{Environment}.company.xyz --> {Environment}
-- https://some-project-{Environment}.company.xyz --> {Environment}
-- https://{Environment}-some-project.company.xyz --> {Environment}
-- https://some-{Environment}-project.company.xyz --> {Environment}
-- https://www.{Environment}.company.xyz --> {Environment}
-
-### Determining if Sentry is enabled for the application
-
-Currently simply checks if provided DSN is available and if it has length more than zero.
+Evaluate and throttle before sending message to Sentry in case of excessive
+amount of failures. This will allow for a spike of 4-5 requests, decaying
+using mean lifetime of 1 minute.
 
 ## Contributing
 
