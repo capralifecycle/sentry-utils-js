@@ -14,7 +14,7 @@
     "test": "jest --coverage src",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "prepare": "npm run build",
+    "prepare": "npm run build && husky install",
     "semantic-release": "semantic-release"
   },
   "repository": {
@@ -47,10 +47,5 @@
   },
   "dependencies": {
     "@sentry/browser": "^6.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   }
 }
