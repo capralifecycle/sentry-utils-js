@@ -12,7 +12,8 @@ function logToConsole(
   tags?: Tags,
   extras?: Extras,
 ): void {
-  console.log(`${severity.toUpperCase()}: ${message}`, tags, extras)
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  console.log(`${severity?.toUpperCase()}: ${message}`, tags, extras)
 }
 
 function logToSentry(
@@ -94,6 +95,7 @@ export function captureException(
       Sentry.captureException(err)
     })
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     logToConsole("log", err, tags, extras)
   }
 }

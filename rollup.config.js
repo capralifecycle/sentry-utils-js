@@ -20,7 +20,9 @@ export default {
     },
   ],
   external: [
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     ...Object.keys(pkg.dependencies || {}),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     ...Object.keys(pkg.peerDependencies || {}),
   ],
   plugins: [typescript()],
