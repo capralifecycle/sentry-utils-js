@@ -1,5 +1,4 @@
 import * as Sentry from "@sentry/browser"
-import { Severity } from "@sentry/types"
 import { captureDebug, captureInfo } from "./log"
 
 const mockLogToConsole = jest.fn()
@@ -15,10 +14,7 @@ describe("log-service", () => {
   describe("with sentry enabled", () => {
     it("should log to sentry", () => {
       captureInfo("some message", undefined, undefined, true)
-      expect(mockCaptureMessage).toHaveBeenCalledWith(
-        "some message",
-        Severity.Info,
-      )
+      expect(mockCaptureMessage).toHaveBeenCalledWith("some message", "info")
       expect(mockCaptureMessage).toHaveBeenCalledTimes(1)
     })
 
