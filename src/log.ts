@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/browser"
-import { Severity } from "@sentry/types"
+import { SeverityLevel } from "@sentry/browser"
 
 type Tags = Record<string, string>
 
@@ -7,7 +7,7 @@ type Tags = Record<string, string>
 type Extras = Record<string, any>
 
 function logToConsole(
-  severity: Severity,
+  severity: SeverityLevel,
   message: string,
   tags?: Tags,
   extras?: Extras,
@@ -16,7 +16,7 @@ function logToConsole(
 }
 
 function logToSentry(
-  severity: Severity,
+  severity: SeverityLevel,
   message: string,
   tags?: Tags,
   extras?: Extras,
@@ -39,7 +39,7 @@ export function captureDebug(
   isSentryEnabled = false,
 ): void {
   if (!isSentryEnabled) {
-    logToConsole(Severity.Debug, message, tags, extras)
+    logToConsole("debug", message, tags, extras)
   }
 }
 
@@ -50,8 +50,8 @@ export function captureError(
   isSentryEnabled = false,
 ): void {
   isSentryEnabled
-    ? logToSentry(Severity.Error, message, tags, extras)
-    : logToConsole(Severity.Error, message, tags, extras)
+    ? logToSentry("error", message, tags, extras)
+    : logToConsole("error", message, tags, extras)
 }
 
 export function captureInfo(
@@ -61,8 +61,8 @@ export function captureInfo(
   isSentryEnabled = false,
 ): void {
   isSentryEnabled
-    ? logToSentry(Severity.Info, message, tags, extras)
-    : logToConsole(Severity.Info, message, tags, extras)
+    ? logToSentry("info", message, tags, extras)
+    : logToConsole("info", message, tags, extras)
 }
 
 export function captureWarn(
@@ -72,8 +72,8 @@ export function captureWarn(
   isSentryEnabled = false,
 ): void {
   isSentryEnabled
-    ? logToSentry(Severity.Warning, message, tags, extras)
-    : logToConsole(Severity.Warning, message, tags, extras)
+    ? logToSentry("warning", message, tags, extras)
+    : logToConsole("warning", message, tags, extras)
 }
 
 export function captureException(
@@ -94,7 +94,7 @@ export function captureException(
       Sentry.captureException(err)
     })
   } else {
-    logToConsole(Severity.fromString("exception"), err, tags, extras)
+    logToConsole("log", err, tags, extras)
   }
 }
 
@@ -104,7 +104,7 @@ export function captureFeedback(
   extras?: Extras,
   isSentryEnabled = false,
 ): void {
-  const severity = Severity.fromString("feedback")
+  const severity: SeverityLevel = "log"
 
   isSentryEnabled
     ? logToSentry(severity, message, tags, extras)
