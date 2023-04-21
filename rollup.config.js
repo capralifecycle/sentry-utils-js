@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import typescript from "rollup-plugin-typescript2"
-import pkg from "./package.json"
+import pkg from "./package.json" assert { type: "json" }
 
 export default {
   input: "src/index.ts",
