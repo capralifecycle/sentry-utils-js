@@ -43,7 +43,7 @@
     "rimraf": "5.0.1",
     "rollup": "3.23.0",
     "rollup-plugin-typescript2": "0.34.1",
-    "semantic-release": "21.0.2",
+    "semantic-release": "21.0.3",
     "ts-jest": "29.1.0",
     "typescript": "5.1.3"
   },
