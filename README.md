@@ -1,5 +1,8 @@
 # Utils for monitoring web applications with Sentry
 
+> [!NOTE]
+> This project has been archived, as the responsible team has been dissolved.
+
 ## Usage
 
 Install the dependency:
